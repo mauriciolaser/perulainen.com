@@ -1,7 +1,8 @@
-// src/pages/Tesis.js
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import './Tesis.css';
+
 
 const Tesis = () => {
   const [chapters, setChapters] = useState([]);
@@ -35,7 +36,7 @@ const Tesis = () => {
   };
 
   return (
-    <Container fluid>
+    <Container fluid className="mt-5 px-3 px-md-4 px-lg-5">
       <Row>
         {/* Sidebar Navigation */}
         <Col md={3} className="bg-light sidebar">
@@ -45,7 +46,9 @@ const Tesis = () => {
               <li key={chapter.id}>
                 <button
                   onClick={() => handleChapterChange(chapter.id)}
-                  className="d-block w-100 text-start py-2 px-3"
+                  className={`d-block w-100 text-start py-2 px-3 ${
+                    currentChapter?.id === chapter.id ? 'active' : ''
+                  }`}
                   style={{
                     textDecoration: 'none',
                     border: 'none',
@@ -65,13 +68,13 @@ const Tesis = () => {
         <Col md={9} className="p-4">
           {currentChapter ? (
             <>
-              <h2>{currentChapter.title.rendered}</h2>
+              <h2 className="text-left">{currentChapter.title.rendered}</h2>
               <div
                 dangerouslySetInnerHTML={{ __html: currentChapter.content.rendered }}
               />
             </>
           ) : (
-            <p>Seleccione un capítulo de la lista.</p>
+            <p className="text-left">Seleccione un capítulo de la lista.</p>
           )}
         </Col>
       </Row>
