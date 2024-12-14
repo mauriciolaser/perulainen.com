@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom'; // Importa useParams y useNavigate
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import './Tesis.css';
 
-
 const Tesis = () => {
+  const { slug } = useParams(); // Obtén el slug de la URL
+  const navigate = useNavigate(); // Hook para cambiar el URL
   const [chapters, setChapters] = useState([]);
   const [currentChapter, setCurrentChapter] = useState(null);
 
@@ -20,19 +22,23 @@ const Tesis = () => {
         });
 
         setChapters(sortedChapters);
-        if (sortedChapters.length > 0) {
+
+        // Find and set the chapter based on the slug from the URL
+        if (slug) {
+          const chapterBySlug = sortedChapters.find(chapter => chapter.slug === slug);
+          setCurrentChapter(chapterBySlug);
+        } else if (sortedChapters.length > 0) {
           setCurrentChapter(sortedChapters[0]); // Default to the first chapter
         }
       })
       .catch(error => {
         console.error('Error fetching chapters:', error);
       });
-  }, []);
+  }, [slug]); // Refetch when slug changes
 
   // Handler for changing the current chapter
-  const handleChapterChange = (chapterId) => {
-    const chapter = chapters.find(c => c.id === chapterId);
-    setCurrentChapter(chapter);
+  const handleChapterChange = (newSlug) => {
+    navigate(`/tesis/${newSlug}`); // Cambia el URL dinámicamente
   };
 
   return (
@@ -45,15 +51,15 @@ const Tesis = () => {
             {chapters.map(chapter => (
               <li key={chapter.id}>
                 <button
-                  onClick={() => handleChapterChange(chapter.id)}
+                  onClick={() => handleChapterChange(chapter.slug)} // Usa el slug
                   className={`d-block w-100 text-start py-2 px-3 ${
-                    currentChapter?.id === chapter.id ? 'active' : ''
+                    currentChapter?.slug === chapter.slug ? 'active' : ''
                   }`}
                   style={{
                     textDecoration: 'none',
                     border: 'none',
-                    background: currentChapter?.id === chapter.id ? '#e9ecef' : 'transparent',
-                    color: currentChapter?.id === chapter.id ? '#007bff' : '#000',
+                    background: currentChapter?.slug === chapter.slug ? '#e9ecef' : 'transparent',
+                    color: currentChapter?.slug === chapter.slug ? '#007bff' : '#000',
                     cursor: 'pointer',
                   }}
                 >
