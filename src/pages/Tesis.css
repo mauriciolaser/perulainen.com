@@ -1,0 +1,21 @@
+.sidebar button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 15px;
+    border: none;
+    background: transparent;
+    color: #000;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+  }
+  
+  .sidebar button:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+  
+  .sidebar button.active {
+    background-color: #e9ecef;
+    color: #007bff;
+  }
+  
