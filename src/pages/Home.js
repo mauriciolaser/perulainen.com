@@ -43,16 +43,27 @@ const Home = () => {
 
   return (
     <Container>
+      {/* Welcome Paragraph */}
+      <Row className="my-4">
+        <Col>
+          <h1>¡Hola!</h1>
+          <p>
+            Welcome to my personal website. Here, you can explore my blog posts, read my thesis in English, 
+            or check out my thesis in Spanish.
+          </p>
+        </Col>
+      </Row>
+
       <Row>
         {/* Card for Posts */}
         <Col md={4} className="mb-4">
           <Card>
             <Card.Body>
-              <Card.Title>Posts</Card.Title>
+              <Card.Title>Blog</Card.Title>
               <Card.Text>
                 My blog posts.
               </Card.Text>
-              <Link to="/" className="btn btn-primary">View Posts</Link>
+              <Link to="/blog" className="btn btn-primary">View Posts</Link>
             </Card.Body>
           </Card>
         </Col>
@@ -63,7 +74,7 @@ const Home = () => {
             <Card.Body>
               <Card.Title>Thesis</Card.Title>
               <Card.Text>
-                Read my thesis in english.
+                Read my thesis in English.
               </Card.Text>
               <Link to="/thesis" className="btn btn-primary">View Thesis</Link>
             </Card.Body>
@@ -78,12 +89,11 @@ const Home = () => {
               <Card.Text>
                 Leer mi tesis en español.
               </Card.Text>
-              <Link to="/tesis" className="btn btn-primary">View Tesis</Link>
+              <Link to="/tesis" className="btn btn-primary">Ver Tesis</Link>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-
     </Container>
   );
 };
