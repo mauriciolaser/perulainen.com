@@ -89,7 +89,7 @@ const Home = () => {
               <Card.Text>
                 Leer mi tesis en español.
               </Card.Text>
-              <Link to="/tesis" className="btn btn-primary">Ver Tesis</Link>
+              <Link to="/tesis/prefacio" className="btn btn-primary">Ver Tesis</Link>
             </Card.Body>
           </Card>
         </Col>
