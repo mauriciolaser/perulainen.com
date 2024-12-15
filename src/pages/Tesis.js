@@ -1,44 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Importa useParams y useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import './Tesis.css';
 
 const Tesis = () => {
-  const { slug } = useParams(); // Obtén el slug de la URL
-  const navigate = useNavigate(); // Hook para cambiar el URL
+  const { slug } = useParams();
+  const navigate = useNavigate();
   const [chapters, setChapters] = useState([]);
   const [currentChapter, setCurrentChapter] = useState(null);
-  const [downloadCount, setDownloadCount] = useState(0); // Estado para el contador de descargas
+  const [downloadCount, setDownloadCount] = useState(0);
 
-  // Fetch chapters data from API
-  useEffect(() => {
-    axios
-      .get('https://www.perulainen.com/cms/wp-json/wp/v2/tesis')
-      .then((response) => {
-        // Sort chapters by the "origin" field (assuming it's a number)
-        const sortedChapters = response.data.sort((a, b) => {
-          const originA = parseInt(a.meta?.order || 0, 10);
-          const originB = parseInt(b.meta?.order || 0, 10);
-          return originA - originB;
+  const fetchAllChapters = async () => {
+    let allChapters = [];
+    let currentPage = 1;
+    let totalPages = 1;
+
+    try {
+      while (currentPage <= totalPages) {
+        const response = await axios.get('https://www.perulainen.com/cms/wp-json/wp/v2/tesis', {
+          params: {
+            per_page: 50, // Número máximo de resultados por página permitido por WordPress.
+            page: currentPage,
+          },
         });
 
-        setChapters(sortedChapters);
+        allChapters = [...allChapters, ...response.data];
+        totalPages = parseInt(response.headers['x-wp-totalpages'], 10);
+        currentPage++;
+      }
 
-        // Find and set the chapter based on the slug from the URL
-        if (slug) {
-          const chapterBySlug = sortedChapters.find((chapter) => chapter.slug === slug);
-          setCurrentChapter(chapterBySlug);
-        } else if (sortedChapters.length > 0) {
-          setCurrentChapter(sortedChapters[0]); // Default to the first chapter
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching chapters:', error);
+      // Ordenar capítulos por el campo "origin".
+      const sortedChapters = allChapters.sort((a, b) => {
+        const originA = parseInt(a.meta?.order || 0, 10);
+        const originB = parseInt(b.meta?.order || 0, 10);
+        return originA - originB;
       });
-  }, [slug]); // Refetch when slug changes
 
-  // Fetch the download count for the single record
+      setChapters(sortedChapters);
+
+      if (!slug && sortedChapters.length > 0) {
+        const defaultChapter = sortedChapters.find((chapter) => chapter.slug === 'prefacio');
+        if (defaultChapter) {
+          navigate(`/tesis/${defaultChapter.slug}`);
+        }
+      } else if (sortedChapters.length > 0) {
+        const chapterBySlug = sortedChapters.find((chapter) => chapter.slug === slug);
+        setCurrentChapter(chapterBySlug);
+      }
+    } catch (error) {
+      console.error('Error fetching chapters:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllChapters();
+  }, [slug, navigate]);
+
   useEffect(() => {
     if (slug === 'prefacio') {
       axios
@@ -52,15 +70,12 @@ const Tesis = () => {
     }
   }, [slug]);
 
-  // Handle chapter change
   const handleChapterChange = (newSlug) => {
-    navigate(`/tesis/${newSlug}`); // Cambia el URL dinámicamente
+    navigate(`/tesis/${newSlug}`);
   };
 
-  // Handle file download
   const handleDownload = () => {
     if (window.gtag) {
-      // Enviar evento a Google Analytics
       window.gtag('event', 'download', {
         event_category: 'Downloads',
         event_label: 'Tesis',
@@ -68,7 +83,6 @@ const Tesis = () => {
       });
     }
 
-    // Incrementar el contador en WordPress
     axios
       .post('https://www.perulainen.com/cms/wp-json/downloads/v1/increment')
       .then((response) => {
@@ -82,14 +96,13 @@ const Tesis = () => {
   return (
     <Container fluid className="mt-5 px-3 px-md-4 px-lg-5">
       <Row>
-        {/* Sidebar Navigation */}
         <Col md={3} className="bg-light sidebar">
           <h5 className="my-3">Capítulos</h5>
           <ul className="list-unstyled">
             {chapters.map((chapter) => (
               <li key={chapter.id}>
                 <button
-                  onClick={() => handleChapterChange(chapter.slug)} // Usa el slug
+                  onClick={() => handleChapterChange(chapter.slug)}
                   className={`d-block w-100 text-start py-2 px-3 ${
                     currentChapter?.slug === chapter.slug ? 'active' : ''
                   }`}
@@ -108,14 +121,12 @@ const Tesis = () => {
           </ul>
         </Col>
 
-        {/* Main Content */}
         <Col md={9} className="p-4">
           {currentChapter ? (
             <>
               <h2 className="text-left">{currentChapter.title.rendered}</h2>
               <div dangerouslySetInnerHTML={{ __html: currentChapter.content.rendered }} />
 
-              {/* Mostrar el enlace de descarga solo en el capítulo Prefacio */}
               {currentChapter.slug === 'prefacio' && (
                 <div className="mt-4">
                   <a
@@ -123,14 +134,14 @@ const Tesis = () => {
                     onClick={handleDownload}
                     download
                   >
-                    Descargar Tesis
+                    Descargar Tesis (Inglés)
                   </a>
                   <span> ({downloadCount} descargas)</span>
                 </div>
               )}
             </>
           ) : (
-            <p className="text-left">Seleccione un capítulo de la lista.</p>
+            <p className="text-left">Cargando contenido.</p>
           )}
         </Col>
       </Row>

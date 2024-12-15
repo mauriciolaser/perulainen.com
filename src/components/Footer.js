@@ -1,7 +1,6 @@
-// src/components/Footer.js
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaLinkedin, FaGithub, FaTwitter  } from 'react-icons/fa';
+import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -30,7 +29,15 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="text-white mx-3"
           >
-            <FaTwitter size={30} /> {/* Usamos FaTwitter como ícono genérico */}
+            <img
+              src="/Bluesky_Logo.svg"
+              alt="Bluesky Logo"
+    style={{
+      width: '30px',
+      height: '30px',
+      filter: 'brightness(0) invert(1)', // Cambia cualquier color a blanco
+    }}
+            />
           </a>
         </div>
         <p className="mt-2 mb-0">© {new Date().getFullYear()} Mauricio Castro Valdez</p>

@@ -50,3 +50,10 @@
 .sidebar button {
   text-align: left; /* Asegura que el texto del botón también esté alineado a la izquierda */
 }
+
+blockquote {
+  margin-left: 2em;
+  font-weight: 400;
+  border-left: 3px solid #ccc;
+  padding-left: 1em;
+}
