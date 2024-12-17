@@ -41,6 +41,11 @@ const Home = () => {
       });
   }, []);
 
+  // Change document title dynamically
+  useEffect(() => {
+    document.title = "perulainen | Home";
+  }, []);
+
   return (
     <Container>
       {/* Welcome Paragraph */}

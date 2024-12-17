@@ -70,6 +70,11 @@ const Tesis = () => {
     }
   }, [slug]);
 
+  // Cambiar el título de la página dinámicamente
+  useEffect(() => {
+    document.title = "perulainen | Tesis";
+  }, [slug]);
+
   const handleChapterChange = (newSlug) => {
     navigate(`/tesis/${newSlug}`);
   };
