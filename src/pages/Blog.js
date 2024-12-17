@@ -23,6 +23,10 @@ const Blog = () => {
     return text.length > limit ? text.substring(0, limit) + '...' : text;
   };
 
+    useEffect(() => {
+      document.title = "perulainen | Blog";
+    }, []);
+
   return (
     <Container>
       <h1 className="my-4">Blog</h1>
