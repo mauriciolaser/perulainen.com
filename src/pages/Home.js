@@ -53,8 +53,8 @@ const Home = () => {
         <Col>
           <h1>¡Hola!</h1>
           <p>
-            Welcome to my personal website. Here, you can explore my blog posts, read my thesis in English, 
-            or check out my thesis in Spanish.
+            Welcome to my personal website. Here, you can explore my blog posts, read my thesis in Spanish, 
+            or in <a href="https://github.com/mauriciolaser/counterforensic-ludology/tree/main/English" target="_blank">English</a>.
           </p>
         </Col>
       </Row>

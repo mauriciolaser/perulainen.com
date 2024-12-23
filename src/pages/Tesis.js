@@ -132,7 +132,7 @@ const Tesis = () => {
               <h2 className="text-left">{currentChapter.title.rendered}</h2>
               <div dangerouslySetInnerHTML={{ __html: currentChapter.content.rendered }} />
 
-              {currentChapter.slug === 'prefacio' && (
+            {/*}  {currentChapter.slug === 'prefacio' && (
                 <div className="mt-4">
                   <a
                     href="/CastroValdezMauricio.pdf"
@@ -143,7 +143,7 @@ const Tesis = () => {
                   </a>
                   <span> ({downloadCount} descargas)</span>
                 </div>
-              )}
+              )} {*/}
             </>
           ) : (
             <p className="text-left">Cargando contenido.</p>
