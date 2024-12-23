@@ -73,7 +73,7 @@ const Home = () => {
           </Card>
         </Col>
 
-        {/* Card for Thesis 
+        {/*Card for Thesis*/} 
         <Col md={4} className="mb-4">
           <Card>
             <Card.Body>
@@ -84,7 +84,7 @@ const Home = () => {
               <Link to="/thesis" className="btn btn-primary">View Thesis</Link>
             </Card.Body>
           </Card>
-        </Col> */}
+        </Col>
 
         {/* Card for Tesis */}
         <Col md={4} className="mb-4">

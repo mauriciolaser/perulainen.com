@@ -6,6 +6,7 @@ import Footer from './components/Footer'; // Importa el Footer
 import Home from './pages/Home';
 import Post from './pages/Post';
 import Tesis from './pages/Tesis';
+import Thesis from './pages/Thesis';
 import Blog from './pages/Blog';
 
 const App = () => {
@@ -22,6 +23,8 @@ const App = () => {
             <Route path="/post/:id" element={<Post />} />
             <Route path="/tesis" element={<Tesis />} />
             <Route path="/tesis/:slug" element={<Tesis />} /> {/* Ruta para slugs */}
+            <Route path="/thesis" element={<Thesis />} />
+            <Route path="/thesis/:slug" element={<Thesis />} /> {/* Ruta para slugs */}
             <Route path="/blog" element={<Blog />} />
           </Routes>
         </div>
