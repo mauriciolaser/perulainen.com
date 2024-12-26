@@ -40,7 +40,18 @@ const Footer = () => {
             />
           </a>
         </div>
-        <p className="mt-2 mb-0">© {new Date().getFullYear()} Mauricio Castro Valdez</p>
+        <p className="mt-2 mb-0">
+  © {new Date().getFullYear()}{' '}
+  <a 
+    href="https://www.castrovaldez.com" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    style={{ textDecoration: 'none', color: 'inherit' }}
+  >
+    Mauricio Castro Valdez
+  </a>
+</p>
+
       </div>
     </footer>
   );

@@ -2,6 +2,7 @@
 
 # texto
 .obsidian/
+notes/.obsidian/
 
 # dependencies
 /node_modules
