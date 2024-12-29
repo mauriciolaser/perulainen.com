@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 
+
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [thesis, setThesis] = useState([]);
@@ -47,7 +48,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
+    <Container className='home-container'>
       {/* Welcome Paragraph */}
       <Row className="my-4">
         <Col>
@@ -92,7 +93,7 @@ const Home = () => {
             <Card.Body>
               <Card.Title>Tesis</Card.Title>
               <Card.Text>
-                Leer mi tesis en español.
+                Leer mi tesis en castellano.
               </Card.Text>
               <Link to="/tesis/prefacio" className="btn btn-primary">Ver Tesis</Link>
             </Card.Body>

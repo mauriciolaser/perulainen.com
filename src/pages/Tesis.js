@@ -99,9 +99,9 @@ const Tesis = () => {
   };
 
   return (
-    <Container fluid className="mt-5 px-3 px-md-4 px-lg-5">
+    <Container fluid className="mt-4 px-3 px-md-4 px-lg-6">
       <Row>
-        <Col md={3} className="bg-light sidebar">
+        <Col md={4} className="bg-light sidebar">
           <h5 className="my-3">Capítulos</h5>
           <ul className="list-unstyled">
             {chapters.map((chapter) => (
@@ -126,24 +126,12 @@ const Tesis = () => {
           </ul>
         </Col>
 
-        <Col md={9} className="p-4">
+        <Col md={8} className="p-4 content">
           {currentChapter ? (
             <>
               <h2 className="text-left">{currentChapter.title.rendered}</h2>
               <div dangerouslySetInnerHTML={{ __html: currentChapter.content.rendered }} />
 
-            {/*}  {currentChapter.slug === 'prefacio' && (
-                <div className="mt-4">
-                  <a
-                    href="/CastroValdezMauricio.pdf"
-                    onClick={handleDownload}
-                    download
-                  >
-                    Descargar Tesis (Inglés)
-                  </a>
-                  <span> ({downloadCount} descargas)</span>
-                </div>
-              )} {*/}
             </>
           ) : (
             <p className="text-left">Cargando contenido.</p>

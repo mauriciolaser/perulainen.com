@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
+
 const Post = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -22,8 +23,8 @@ const Post = () => {
   }
 
   return (
-    <Container>
-      <h1>{post.title.rendered}</h1>
+    <Container className='post-container'>
+      <h1 className='my-4'>{post.title.rendered}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
     </Container>
   );

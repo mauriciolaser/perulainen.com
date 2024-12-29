@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
+
 const Footer = () => {
   return (
     <footer className="bg-dark text-white text-center py-3">
@@ -40,7 +41,7 @@ const Footer = () => {
             />
           </a>
         </div>
-        <p className="mt-2 mb-0">
+        <p className="mt-3 mb-0">
   © {new Date().getFullYear()}{' '}
   <a 
     href="https://www.castrovaldez.com" 

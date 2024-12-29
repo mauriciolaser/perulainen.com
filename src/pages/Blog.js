@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
+
 const Blog = () => {
   const [posts, setPosts] = useState([]);
 
@@ -28,7 +29,7 @@ const Blog = () => {
     }, []);
 
   return (
-    <Container>
+    <Container className='blog-container'>
       <h1 className="my-4">Blog</h1>
       <Row>
         {posts.map((post) => (

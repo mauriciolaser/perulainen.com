@@ -1,0 +1,3 @@
+.blog-container{
+    padding-top: 4rem !important; /* Para evitar superposición con el Navbar */
+}

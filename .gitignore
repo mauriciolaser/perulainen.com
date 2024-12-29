@@ -1,8 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # texto
-.obsidian/
-notes/.obsidian/
+blog-perulainen/.obsidian/
 
 # dependencies
 /node_modules

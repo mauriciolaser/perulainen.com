@@ -2,8 +2,10 @@
 .container-fluid {
   padding-left: 15px; /* Ajuste básico para todo el contenido */
   padding-right: 15px;
-  margin-top: 70px; /* Para evitar superposición con el Navbar */
   max-width: 100%; /* Asegurar que no supere el ancho total en pantallas pequeñas */
+  font-family: 'Cormorant Garamond', serif; /* Aplicar la fuente */
+  line-height: 30px; /* Altura de línea */
+  font-size: 20px; /* Tamaño de fuente */
 }
 
 /* Larger screens */
@@ -29,7 +31,7 @@
 
 /* Sidebar adjustments */
 .sidebar {
-  margin-top: 1rem;
+  margin-top: 0rem;
   border-right: 1px solid #ddd; /* Visual separation for the sidebar */
 }
 
@@ -38,12 +40,29 @@
   margin-top: 1rem;
   padding-left: 10px;
   padding-right: 10px;
+
+}
+
+.p-4 h2{
+  font-weight: 600; /* Peso especificado */
+  color: black;
+}
+
+.p-4 h3{
+  font-weight: 500; /* Peso especificado */
+  color: black;
+}
+
+.p-4 p{
+  font-weight: 400; /* Peso especificado */
+  color: #222222;
 }
 
 /* Alinear el título del sidebar a la izquierda */
 .sidebar h5 {
   text-align: left; /* Alinea el texto del título */
   padding-left: 15px; /* Añade algo de espacio desde el borde */
+  font-weight: 800;
 }
 
 /* Botones de capítulos alineados a la izquierda */
