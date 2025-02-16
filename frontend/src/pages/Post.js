@@ -13,7 +13,7 @@ const Post = () => {
     const fetchPostData = async () => {
       try {
         const postResponse = await axios.get(
-          `https://www.perulainen.com/cms/wp-json/wp/v2/posts/${id}`,
+          `${process.env.REACT_APP_API_URL}posts/${id}`,
           {
             params: {
               _embed: true // Incluir medios embebidos
@@ -24,7 +24,10 @@ const Post = () => {
         setPost(postResponse.data);
         
         // Obtener imagen destacada
-        if (postResponse.data._embedded && postResponse.data._embedded['wp:featuredmedia']) {
+        if (
+          postResponse.data._embedded &&
+          postResponse.data._embedded['wp:featuredmedia']
+        ) {
           setFeaturedImage(postResponse.data._embedded['wp:featuredmedia'][0]);
         }
       } catch (error) {
@@ -48,9 +51,9 @@ const Post = () => {
   }
 
   return (
-    <Container className='post-container'>
+    <Container className="post-container">
       <article>
-        <h1 className='post-title'>{post.title.rendered}</h1>
+        <h1 className="post-title">{post.title.rendered}</h1>
         
         {featuredImage && (
           <a 

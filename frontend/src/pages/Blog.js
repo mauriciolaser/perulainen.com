@@ -10,7 +10,7 @@ const Blog = () => {
   // Fetch posts from the API
   useEffect(() => {
     axios
-      .get('https://www.perulainen.com/cms/wp-json/wp/v2/posts/')
+    .get(`${process.env.REACT_APP_API_URL}posts/`)
       .then((response) => {
         setPosts(response.data);
       })

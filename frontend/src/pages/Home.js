@@ -11,7 +11,7 @@ const Home = () => {
 
   // Fetch Posts Data
   useEffect(() => {
-    axios.get('https://www.perulainen.com/cms/wp-json/wp/v2/posts')
+    axios.get(`${process.env.REACT_APP_API_URL}posts/`)
       .then(response => {
         setPosts(response.data);
       })
@@ -22,7 +22,7 @@ const Home = () => {
 
   // Fetch Thesis Data
   useEffect(() => {
-    axios.get('https://www.perulainen.com/cms/wp-json/wp/v2/thesis')
+    axios.get(`${process.env.REACT_APP_API_URL}thesis/`)
       .then(response => {
         setThesis(response.data);
       })
@@ -33,7 +33,7 @@ const Home = () => {
 
   // Fetch Tesis Data
   useEffect(() => {
-    axios.get('https://www.perulainen.com/cms/wp-json/wp/v2/tesis')
+    axios.get(`${process.env.REACT_APP_API_URL}tesis/`)
       .then(response => {
         setTesis(response.data);
       })

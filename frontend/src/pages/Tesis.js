@@ -18,12 +18,15 @@ const Tesis = () => {
 
     try {
       while (currentPage <= totalPages) {
-        const response = await axios.get('https://www.perulainen.com/cms/wp-json/wp/v2/tesis', {
-          params: {
-            per_page: 50, // Número máximo de resultados por página permitido por WordPress.
-            page: currentPage,
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}tesis`,
+          {
+            params: {
+              per_page: 50, // Número máximo de resultados por página permitido por WordPress.
+              page: currentPage,
+            },
+          }
+        );
 
         allChapters = [...allChapters, ...response.data];
         totalPages = parseInt(response.headers['x-wp-totalpages'], 10);
@@ -40,12 +43,16 @@ const Tesis = () => {
       setChapters(sortedChapters);
 
       if (!slug && sortedChapters.length > 0) {
-        const defaultChapter = sortedChapters.find((chapter) => chapter.slug === 'prefacio');
+        const defaultChapter = sortedChapters.find(
+          (chapter) => chapter.slug === 'prefacio'
+        );
         if (defaultChapter) {
           navigate(`/tesis/${defaultChapter.slug}`);
         }
       } else if (sortedChapters.length > 0) {
-        const chapterBySlug = sortedChapters.find((chapter) => chapter.slug === slug);
+        const chapterBySlug = sortedChapters.find(
+          (chapter) => chapter.slug === slug
+        );
         setCurrentChapter(chapterBySlug);
       }
     } catch (error) {
@@ -60,13 +67,15 @@ const Tesis = () => {
   useEffect(() => {
     if (slug === 'prefacio') {
       axios
-        .get('https://www.perulainen.com/cms/wp-json/downloads/v1/count')
+        .get(`${process.env.REACT_APP_DOWNLOAD_URL}count`)
         .then((response) => {
           if (response.data.success) {
             setDownloadCount(response.data.count);
           }
         })
-        .catch((error) => console.error('Error fetching download count:', error));
+        .catch((error) =>
+          console.error('Error fetching download count:', error)
+        );
     }
   }, [slug]);
 
@@ -89,13 +98,15 @@ const Tesis = () => {
     }
 
     axios
-      .post('https://www.perulainen.com/cms/wp-json/downloads/v1/increment')
+      .post(`${process.env.REACT_APP_DOWNLOAD_URL}increment`)
       .then((response) => {
         if (response.data.success) {
           setDownloadCount(response.data.count);
         }
       })
-      .catch((error) => console.error('Error incrementing download count:', error));
+      .catch((error) =>
+        console.error('Error incrementing download count:', error)
+      );
   };
 
   return (
@@ -114,8 +125,14 @@ const Tesis = () => {
                   style={{
                     textDecoration: 'none',
                     border: 'none',
-                    background: currentChapter?.slug === chapter.slug ? '#e9ecef' : 'transparent',
-                    color: currentChapter?.slug === chapter.slug ? '#007bff' : '#000',
+                    background:
+                      currentChapter?.slug === chapter.slug
+                        ? '#e9ecef'
+                        : 'transparent',
+                    color:
+                      currentChapter?.slug === chapter.slug
+                        ? '#007bff'
+                        : '#000',
                     cursor: 'pointer',
                   }}
                 >
@@ -130,8 +147,11 @@ const Tesis = () => {
           {currentChapter ? (
             <>
               <h2 className="text-left">{currentChapter.title.rendered}</h2>
-              <div dangerouslySetInnerHTML={{ __html: currentChapter.content.rendered }} />
-
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: currentChapter.content.rendered,
+                }}
+              />
             </>
           ) : (
             <p className="text-left">Cargando contenido.</p>
