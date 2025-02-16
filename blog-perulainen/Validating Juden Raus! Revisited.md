@@ -1,1 +1,0 @@
-Para mi proyecto de tesis construí 3 adaptaciones del juego de mesa *Juden Raus!* (Anonymous, 1938). 

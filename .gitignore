@@ -4,7 +4,8 @@
 blog-perulainen/.obsidian/
 
 # dependencies
-/node_modules
+frontend/node_modules
+frontend/.env.production
 /.pnp
 .pnp.js
 
@@ -12,7 +13,7 @@ blog-perulainen/.obsidian/
 /coverage
 
 # production
-/build
+frontend/build
 
 # misc
 .DS_Store
