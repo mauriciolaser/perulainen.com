@@ -10,15 +10,13 @@ frontend/coverage
 # production
 frontend/build
 
-# backup
-backup/
-
 # misc
 frontend/.DS_Store
 frontend/.env.local
 frontend/.env.development.local
 frontend/.env.test.local
 frontend/.env.production.local
+frontend/.env
 
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
