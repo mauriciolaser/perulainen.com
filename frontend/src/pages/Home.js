@@ -67,7 +67,7 @@ const Home = () => {
             <Card.Body>
               <Card.Title>Blog</Card.Title>
               <Card.Text>
-                My blog posts.
+                Check my blog.
               </Card.Text>
               <Link to="/blog" className="btn btn-primary">View Posts</Link>
             </Card.Body>
