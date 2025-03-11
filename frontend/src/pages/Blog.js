@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
-
 const Blog = () => {
   const [posts, setPosts] = useState([]);
 
   // Fetch posts from the API
   useEffect(() => {
     axios
-    .get(`${process.env.REACT_APP_API_URL}posts/`)
+      .get(`${process.env.REACT_APP_API_URL}posts/`)
       .then((response) => {
         setPosts(response.data);
       })
@@ -24,9 +23,9 @@ const Blog = () => {
     return text.length > limit ? text.substring(0, limit) + '...' : text;
   };
 
-    useEffect(() => {
-      document.title = "perulainen | Blog";
-    }, []);
+  useEffect(() => {
+    document.title = "perulainen | Blog";
+  }, []);
 
   return (
     <Container className='blog-container'>
@@ -40,7 +39,8 @@ const Blog = () => {
                 <Card.Text>
                   {truncateText(post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, ''), 160)}
                 </Card.Text>
-                <Link to={`/post/${post.id}`} className="btn btn-primary">
+                {/* Enlace actualizado para usar el slug */}
+                <Link to={`/post/${post.slug}`} className="btn btn-primary">
                   Read More
                 </Link>
               </Card.Body>

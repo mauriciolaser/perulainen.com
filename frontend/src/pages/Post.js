@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap';
 import './Post.css';
 
 const Post = () => {
-  const { id } = useParams();
+  const { slug } = useParams(); // Extraemos "slug" desde la URL
   const [post, setPost] = useState(null);
   const [featuredImage, setFeaturedImage] = useState(null);
 
@@ -13,22 +13,19 @@ const Post = () => {
     const fetchPostData = async () => {
       try {
         const postResponse = await axios.get(
-          `${process.env.REACT_APP_API_URL}posts/${id}`,
+          `${process.env.REACT_APP_API_URL}posts`,
           {
             params: {
-              _embed: true // Incluir medios embebidos
+              slug: slug, // Ahora usamos el "slug" correctamente
+              _embed: true
             }
           }
         );
-        
-        setPost(postResponse.data);
-        
-        // Obtener imagen destacada
-        if (
-          postResponse.data._embedded &&
-          postResponse.data._embedded['wp:featuredmedia']
-        ) {
-          setFeaturedImage(postResponse.data._embedded['wp:featuredmedia'][0]);
+
+        if (postResponse.data.length > 0) {
+          setPost(postResponse.data[0]); // La API devuelve un array, tomamos el primer elemento
+        } else {
+          console.error('Post not found');
         }
       } catch (error) {
         console.error('Error fetching post:', error);
@@ -36,7 +33,7 @@ const Post = () => {
     };
 
     fetchPostData();
-  }, [id]);
+  }, [slug]); // Se usa "slug" como dependencia
 
   if (!post) {
     return (
@@ -54,11 +51,11 @@ const Post = () => {
     <Container className="post-container">
       <article>
         <h1 className="post-title">{post.title.rendered}</h1>
-        
+
         {featuredImage && (
-          <a 
-            href={featuredImage.source_url} 
-            target="_blank" 
+          <a
+            href={featuredImage.source_url}
+            target="_blank"
             rel="noopener noreferrer"
             className="image-modal-trigger"
           >
@@ -70,11 +67,11 @@ const Post = () => {
           </a>
         )}
 
-        <div 
+        <div
           className="post-content"
-          dangerouslySetInnerHTML={{ __html: post.content.rendered }} 
+          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
         />
-        
+
         <div className="post-meta mt-5 pt-4 border-top">
           <p className="text-muted small">
             Published: {new Date(post.date).toLocaleDateString('en-EN', {
