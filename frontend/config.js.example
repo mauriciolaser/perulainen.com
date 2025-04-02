@@ -1,0 +1,8 @@
+// config.js
+module.exports = {
+    DEPLOY_FTP_HOST: "",
+    DEPLOY_FTP_USER: "",
+    DEPLOY_FTP_PASSWORD: "",
+    DEPLOY_FTP_PORT: 21,
+    DEPLOY_FTP_REMOTE_PATH: ""
+  };
