@@ -5,27 +5,41 @@ import { Container } from 'react-bootstrap';
 import './Post.css';
 
 const Post = () => {
-  const { slug } = useParams(); // Extraemos "slug" desde la URL
+  const { slug } = useParams();
   const [post, setPost] = useState(null);
   const [featuredImage, setFeaturedImage] = useState(null);
 
   useEffect(() => {
+    if (!slug) return; // Si no hay slug, no hace nada
+
     const fetchPostData = async () => {
       try {
-        const postResponse = await axios.get(
+        const response = await axios.get(
           `${process.env.REACT_APP_API_URL}posts`,
           {
             params: {
-              slug: slug, // Ahora usamos el "slug" correctamente
-              _embed: true
-            }
+              slug: slug,
+              _embed: true,
+            },
           }
         );
 
-        if (postResponse.data.length > 0) {
-          setPost(postResponse.data[0]); // La API devuelve un array, tomamos el primer elemento
+        // Si se encuentra algún post, guardamos el primero
+        if (response.data.length > 0) {
+          const fetchedPost = response.data[0];
+          setPost(fetchedPost);
+
+          // Si existe una imagen destacada, la guardamos
+          if (
+            fetchedPost._embedded &&
+            fetchedPost._embedded['wp:featuredmedia'] &&
+            fetchedPost._embedded['wp:featuredmedia'][0]
+          ) {
+            setFeaturedImage(fetchedPost._embedded['wp:featuredmedia'][0]);
+          }
         } else {
           console.error('Post not found');
+          setPost(null);
         }
       } catch (error) {
         console.error('Error fetching post:', error);
@@ -33,9 +47,10 @@ const Post = () => {
     };
 
     fetchPostData();
-  }, [slug]); // Se usa "slug" como dependencia
+  }, [slug]);
 
-  if (!post) {
+  // Mientras no se disponga del post o de su título, mostramos un spinner
+  if (!post || !post.title) {
     return (
       <Container className="post-container">
         <div className="loading-spinner text-center py-5">
@@ -50,7 +65,7 @@ const Post = () => {
   return (
     <Container className="post-container">
       <article>
-        <h1 className="post-title">{post.title.rendered}</h1>
+        <h1 className="post-title">{post?.title?.rendered || 'Sin título'}</h1>
 
         {featuredImage && (
           <a
@@ -61,7 +76,7 @@ const Post = () => {
           >
             <img
               src={featuredImage.source_url}
-              alt={featuredImage.alt_text || post.title.rendered}
+              alt={featuredImage?.alt_text || post?.title?.rendered}
               className="img-fluid featured-image mb-4"
             />
           </a>
@@ -69,15 +84,16 @@ const Post = () => {
 
         <div
           className="post-content"
-          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+          dangerouslySetInnerHTML={{ __html: post?.content?.rendered || '' }}
         />
 
         <div className="post-meta mt-5 pt-4 border-top">
           <p className="text-muted small">
-            Published: {new Date(post.date).toLocaleDateString('en-EN', {
+            Published:{' '}
+            {new Date(post.date).toLocaleDateString('en-EN', {
               year: 'numeric',
               month: 'long',
-              day: 'numeric'
+              day: 'numeric',
             })}
           </p>
         </div>

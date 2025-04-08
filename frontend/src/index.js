@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'; // Importa createRoot de React 18
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+console.log("Aplicación iniciada");
+
 // Obtiene el elemento raíz del DOM
 const rootElement = document.getElementById('root');
 
